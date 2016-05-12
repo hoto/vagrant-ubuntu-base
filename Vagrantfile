@@ -35,5 +35,5 @@ Vagrant.configure(2) do |config|
   # install software on the guest (ubuntu) machine, this can take a long time (couple of minutes)
   # provisioning is only done once on the initial `vagrant up`, to rerun provisioning:
   # vagrant reload
-  config.vm.provision "install-software", type: "shell", path: "install-software.sh", privileged: true
+  #config.vm.provision "install-software", type: "shell", path: "install-software.sh", privileged: true
 end
