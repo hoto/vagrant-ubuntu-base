@@ -6,12 +6,18 @@ Vagrant.configure(2) do |config|
 
   config.ssh.forward_agent = true
 
+  # you can add this machine ip to your hosts file like this
+  #
+  # #C:\Windows\System32\drivers\etc\hosts :
+  # 192.168.50.4 vagrant
+  #
+  # then access any guest (ubuntu) port from your host machine (windows) browser (chrome) using:
+  # vagrant:5050
   config.vm.network "private_network", ip: "192.168.50.4"
- #config.vm.network "forwarded_port", guest: 80, host: 80
- #config.vm.network "forwarded_port", guest: 3000, host: 3000
- #config.vm.network "forwarded_port", guest: 3030, host: 3030
- #config.vm.network "forwarded_port", guest: 5000, host: 5000
- #config.vm.network "forwarded_port", guest: 8080, host: 8080
+
+  # this ports will be attached to localhost (if they are available)
+  #config.vm.network "forwarded_port", guest: 80, host: 80
+  #config.vm.network "forwarded_port", guest: 3000, host: 3000
 
   config.vm.provider "virtualbox" do |vb|
     vb.memory = "4000"
@@ -20,26 +26,14 @@ Vagrant.configure(2) do |config|
     vb.customize ["modifyvm", :id, "--monitorcount", "1"]
   end
 
+  #you can share yor projects folder with the guest machine 
+  #config.vm.synced_folder "c:/projects", "/home/vagrant/projects", owner: "vagrant", group: "vagrant"
 
+  #this will copy your ssh keys to guest machine so you can push and pull from eg. gitlab
   config.vm.provision "copy-ssh-keys", type: "file", source: "~/.ssh", destination: "."
 
-  $deployment = "deployment"
-  $install = $deployment + "/install"
-
-  config.vm.provision "install-pip", type: "shell", path: $install + "/install-pip.sh", privileged: true
-  config.vm.provision "install-git", type: "shell", path: $install + "/install-git.sh", privileged: true
-  config.vm.provision "install-nodejs", type: "shell", path: $install + "/install-nodejs.sh", privileged: true
-  config.vm.provision "install-docker", type: "shell", path: $install + "/install-docker.sh", privileged: true
-  config.vm.provision "install-docker-compose", type: "shell", path: $install + "/install-docker-compose.sh", privileged: true
-  config.vm.provision "install-aws-cli", type: "shell", path: $install + "/install-aws-cli.sh", privileged: true
-  config.vm.provision "install-vim", type: "shell", path: $install + "/install-vim.sh", privileged: true
-  config.vm.provision "install-jq", type: "shell", path: $install + "/install-jq.sh", privileged: true
-
-
-  config.vm.provision "shell", inline: <<-SHELL
-    # you can write any bash commands here, install software or do configuration
-    sudo apt-get update
-    sudo apt-get install tree -y
-  SHELL
-
+  # install software on the guest (ubuntu) machine, this can take a long time (couple of minutes)
+  # provisioning is only done once on the initial `vagrant up`, to rerun provisioning:
+  # vagrant reload
+  #config.vm.provision "install-software", type: "shell", path: "install-software", privileged: true
 end
