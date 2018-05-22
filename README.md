@@ -6,15 +6,20 @@ Spin up the machine (user/pass: vagrant/vagrant):
 
     vagrant up
 
+SSH into the machine:
+
+    vagrant ssh
+
 This project directory is shared on the guest machine in:
 
-    /vagrant
+    ls /vagrant
 
 On any problems with provisioning run:
 
     vagrant provision
+    vagrant provision --provision-with "install-software"
 
-Or reboot the machine and rerun provisioning with:
+Reboot with:
 
     vagrant reload
 

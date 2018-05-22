@@ -31,9 +31,7 @@ Vagrant.configure(2) do |config|
   # this will copy your ssh keys to guest machine, those folders are not synchronized
   config.vm.provision "copy-ssh-keys", type: "file", source: "~/.ssh", destination: "/home/vagrant/.ssh"
   config.vm.provision "copy-aws-configs", type: "file", source: "~/.aws", destination: "/home/vagrant/.aws"
+  config.vm.provision "copy-gitconfig", type: "file", source: "~/.gitconfig", destination: "/home/vagrant/.gitconfig"
 
-  # execute script on the guest machine, eg install software 
-  # provisioning is only done once on the initial `vagrant up`
-  # to restart machine and rerun provisioning: `vagrant reload`
   config.vm.provision "install-software", type: "shell", path: "install-software.sh", privileged: true
 end
