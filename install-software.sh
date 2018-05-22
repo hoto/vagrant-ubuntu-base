@@ -1,8 +1,10 @@
 #!/bin/bash 
 set -eu
 
-sudo apt -y update 
-sudo apt install -y tree 
+# executed as root
+
+sudo apt-get -y update 
+sudo apt-get install -y tree python3-pip
 
 function installDocker() {
   if ! [ -x "$(command -v docker)" ]; then
@@ -14,11 +16,33 @@ function installDocker() {
 }
 
 function installDockerCompose() {
-  echo "Installing Docker Compose..."
-  sudo curl \
-    -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) \
-    -o /usr/local/bin/docker-compose
+  if ! [ -x "$(command -v docker-compose)" ]; then
+    echo "Installing Docker Compose..."
+    sudo curl \
+      -L https://github.com/docker/compose/releases/download/1.21.2/docker-compose-$(uname -s)-$(uname -m) \
+      -o /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+  fi
+}
+
+function installAwsCli() {
+  echo "Installing aws cli..."
+  sudo -H -u vagrant bash -c 'pip3 install awscli'
+  sudo -H -u vagrant bash -c 'pip3 install aws-shell'
+}
+
+function installAnsible() {
+  if ! [ -x "$(command -v ansible)" ]; then
+    echo "Instaling Ansible..."
+    sudo apt-get -y update
+    sudo apt-get install -y software-properties-common
+    sudo apt-add-repository ppa:ansible/ansible
+    sudo apt-get -y update
+    sudo apt-get install -y ansible
+  fi
 }
 
 installDocker
 installDockerCompose
+installAwsCli
+installAnsible
