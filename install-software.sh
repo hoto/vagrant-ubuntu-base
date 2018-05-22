@@ -26,9 +26,11 @@ function installDockerCompose() {
 }
 
 function installAwsCli() {
-  echo "Installing aws cli..."
-  sudo -H -u vagrant bash -c 'pip3 install awscli'
-  sudo -H -u vagrant bash -c 'pip3 install aws-shell'
+  if ! [ -x "$(command -v aws)" ]; then
+    echo "Installing aws cli..."
+    sudo -H -u vagrant bash -c 'pip3 install awscli'
+    sudo -H -u vagrant bash -c 'pip3 install aws-shell'
+  fi
 }
 
 function installAnsible() {
