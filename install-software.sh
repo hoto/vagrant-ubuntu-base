@@ -26,7 +26,7 @@ function installDockerCompose() {
 }
 
 function installAwsCli() {
-  if ! [ -x "$(command -v aws)" ]; then
+  if ! [ -x "$(command -v /home/vagrant/.local/bin/aws)" ]; then
     echo "Installing aws cli..."
     sudo -H -u vagrant bash -c 'pip3 install awscli'
     sudo -H -u vagrant bash -c 'pip3 install aws-shell'
