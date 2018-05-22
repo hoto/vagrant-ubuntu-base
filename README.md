@@ -9,6 +9,10 @@ Spin up the machine (user/pass: vagrant/vagrant):
 SSH into the machine:
 
     vagrant ssh
+    
+Test if docker works (you may need to enable virualization in BIOS):
+
+    docker run hello-world
 
 This project directory is shared on the guest machine in:
 
@@ -16,7 +20,6 @@ This project directory is shared on the guest machine in:
 
 On any problems with provisioning run:
 
-    vagrant provision
     vagrant provision --provision-with "install-software"
 
 Reboot with:
