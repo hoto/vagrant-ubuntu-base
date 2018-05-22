@@ -34,6 +34,10 @@ On any problems with provisioning run:
 
     vagrant provision --provision-with "install-software"
 
+Stop machine with:
+
+    vagrant halt
+
 Reboot machine with:
 
     vagrant reload

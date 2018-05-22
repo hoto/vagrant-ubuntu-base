@@ -6,7 +6,7 @@ Vagrant.configure(2) do |config|
   config.ssh.forward_agent = true
   config.vm.network "private_network", ip: "192.168.50.4"
 
-  # this ports will be binded permanently from the guest machine to the host machine
+  # this will bind ports from the guest localhost to the host localhost 
   config.vm.network "forwarded_port", guest: 3000, host: 3000
   #config.vm.network "forwarded_port", guest: 8080, host: 8080
 
