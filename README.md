@@ -2,7 +2,7 @@
 
 Install vagrant https://www.vagrantup.com/downloads.html
 
-Spin up the machine (user/pass: vagrant/vagrant):
+Start the machine (user/pass: vagrant/vagrant):
 
     vagrant up
 
@@ -10,11 +10,23 @@ SSH into the machine:
 
     vagrant ssh
     
-Test if docker works (you may need to enable virualization in BIOS):
+Test if docker works on the guest machine:
 
+    docker info
     docker run hello-world
 
-This project directory is shared on the guest machine in:
+Test port binding and forwarding:
+
+    docker run -d -p 3000:80 -p 4000:80 nginx
+
+Now test those urls from guest and host machine:
+    
+    localhost:3000
+    localhost:4000
+    http://192.168.50.4:3000 
+    http://192.168.50.4:4000
+
+This project directory is synced on the guest machine in:
 
     ls /vagrant
 
@@ -22,7 +34,7 @@ On any problems with provisioning run:
 
     vagrant provision --provision-with "install-software"
 
-Reboot with:
+Reboot machine with:
 
     vagrant reload
 
